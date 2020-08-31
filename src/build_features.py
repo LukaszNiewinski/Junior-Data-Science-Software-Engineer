@@ -26,6 +26,7 @@ def build_ticket_features(data: pd.DataFrame) -> pd.DataFrame:
     COLUMNS = ['Ticket_prefix', 'Ticket_number']
     df = pd.DataFrame(data['Ticket'].map(decompose_ticket).values.tolist(), index=data.index, columns=COLUMNS)
     data = data.join(df, how='right')
+    data.drop('Ticket', axis=1, inplace=True)
     return data
 
 def dummify(data: pd.DataFrame, cols_to_dummify: List[str]) -> pd.DataFrame:
@@ -42,7 +43,7 @@ def dummify(data: pd.DataFrame, cols_to_dummify: List[str]) -> pd.DataFrame:
 
 def execute(input_path: str, output_path: str) -> None:
     """Builds features"""
-    data = pd.read_csv(input_path, index_col='PassengerId', sep=';', decimal='.')
+    data = pd.read_csv(input_path, index_col='PassengerId')
 
     data = build_ticket_features(data)
 
@@ -56,4 +57,4 @@ def execute(input_path: str, output_path: str) -> None:
 
     df["FamilySize"] = df["SibSp"] + df["Parch"] + 1
 
-    df.to_csv(output_path, sep=';', decimal='.')
+    df.to_csv(output_path)
