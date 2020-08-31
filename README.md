@@ -16,10 +16,10 @@
 Below You can find tasks status. Beside working on the tasks I have added notebooks which I used to learn about the data and understand it better.
 
 ### TASK1 - organizational instructions
-That is done. I was trying to work on each branch/task separately. Finished task was merged to master using PR. If there was more commits I was using squash commits.
+That is done. I was trying to work on each branch/task separately. Finished task was merged to master using PR. Multiple commits where squashed.
  
 ### TASK2 - sense of humour
-I really like that one. Within docs there is .md file with my favourite meme. 
+I really like that one. Within docs there is jokes.md file with my favourite meme. 
 
 ### TASK3 - good practices
 That is done. I only lacked of the initial assumptions and I made my own decisions. What I did not add is logging and error handling. 
