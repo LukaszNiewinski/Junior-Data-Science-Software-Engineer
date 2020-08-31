@@ -1,25 +1,27 @@
+import numpy as np
 import pandas as pd
 import pickle as pkl
+from sklearn.metrics import accuracy_score
 
-df = pd.read_csv("data/val_bf.csv")
+def execute(val_input_path: str, model_path: str) -> None:
+    # predict predicts the target class for data in request and returns the result
+    # validation should be used for training for adjsuting the parameters
 
-df.dropna(inplace = True)
+    # how to preprocess validation data?
+    data = pd.read_csv(val_input_path)
 
-target = df["Survived"]
-del(df["Survived"])
-    
-model_unpickle = open("data/model.pkl", 'rb')
-model = pkl.load(model_unpickle)
-model.close()
+    y_val: np.ndarray = data.pop('Survived').values
+    X_val: np.ndarray = data.values
 
-predictions = model.predict(df)
-# Reassign target (if it was present) and predictions.
-df["prediction"] = predictions
-df["target"] = target
+    # read with context manager?
+    model_unpickle = open(model_path, 'rb')
+    model = pkl.load(model_unpickle)
+    model.close()
 
-ok = 0
-for i in df.iterrows():
-    if (i[1]["target"] == i[1]["prediction"]):
-        ok = ok + 1
+    # keep predictions and target separated
+    prdY_val = model.predict(X_val)
 
-print("accuracy is", ok / df.shape[0])
+    accuracy_rate = accuracy_score(y_val, prdY_val)
+
+    info = f'accuracy rate on validation set is {accuracy_rate}'
+    print(info)
